@@ -1,9 +1,9 @@
 export const create = async (profile) => {
     const transformedProfile = {
-        name: profile.firstname + " " + profile.lastname,
+        name: profile.firstName + " " + profile.lastName,
         birthdate: profile.dob,
         "program": profile.course + " " + profile.major,
-        "studentStatus": profile.status
+        "status": profile.status
     }
 
     const response = await fetch (

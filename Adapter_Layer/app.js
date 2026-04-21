@@ -7,11 +7,16 @@ const app = express();
 app.use(express.json());
 
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
+    console.log(`${req.method} request to ${req.path}`);
     next();
 });
 
 app.use('/auth', authRoute);
+
+const PORT = 4000; 
+app.listen(PORT, () => {
+    console.log(`Adapter Layer running on port ${PORT}`);
+});
 
 app.use((req, res) => {
     res.status(404).json({

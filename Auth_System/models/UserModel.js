@@ -28,7 +28,7 @@ export const createUser = async (userProfile, email, password) => {
     }
 
     const [user] = await pool.query (
-        "SELECT email FROM tbluser WHERE email = ?", [email]
+        "SELECT email FROM tblStudent WHERE email = ?", [email]
         );
 
     if(user.length === 1) {
@@ -53,8 +53,20 @@ export const createUser = async (userProfile, email, password) => {
     const result = await response.json;
     */
 
+    const response = await fetch (
+        `http://localhost:4000/auth/register`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userProfile)
+        }
+    );
+
+    const result = await response.json();
+
     const [newUser] = await pool.query (
-        "INSERT INTO tbluser (email, password) VALUES (?, ?)",
+        "INSERT INTO tblStudent (email, password) VALUES (?, ?)",
         [email, hashedPassword]
     );
 
@@ -73,7 +85,7 @@ export const login = async (email, password) => {
     }
 
     const [user] = await pool.query (
-        "SELECT * FROM tbluser WHERE email = ?", [email]
+        "SELECT * FROM tblStudent WHERE email = ?", [email]
     );
 
     if(user.length === 0) {
@@ -103,7 +115,7 @@ export const getUser = async (id) => {
     }
 
     const [user] = await pool.query (
-        "SELECT * FROM tbluser WHERE id = ?", [id]
+        "SELECT * FROM tblStudent WHERE id = ?", [id]
     );
     return user;
 };
